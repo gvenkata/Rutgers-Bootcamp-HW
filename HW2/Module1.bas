@@ -69,10 +69,14 @@ Call Module2.OptimizeCode_Begin
                 If yr_open <> 0 Then
                 'Range("K" & Summary_Table_Row).Value = FormatPercent(((yr_close - yr_open) / (yr_open)), 2)
                 Range("K" & Summary_Table_Row).Value = (yr_close - yr_open) / (yr_open)
-                Else
+                ElseIf yr_open = 0 And yr_close <> 0 Then
                 'Range("K" & Summary_Table_Row).Value = FormatPercent(((yr_close - 1) / (1)), 2)
                 Range("K" & Summary_Table_Row).Value = (yr_close - 1) / (1)
                 Range("M" & Summary_Table_Row).Value = "**opening of 0 set to 1 to calculate increase**"
+                ElseIf yr_open = 0 And yr_close = 0 Then
+                'Range("K" & Summary_Table_Row).Value = FormatPercent(((yr_close - 1) / (1)), 2)
+                Range("K" & Summary_Table_Row).Value = 0
+                Range("M" & Summary_Table_Row).Value = "**open and close were 0**"
                 End If
                 
                 If (yr_close - yr_open) > 0 Then

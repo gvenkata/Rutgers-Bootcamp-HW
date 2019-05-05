@@ -1,4 +1,6 @@
+#PyBank
 import csv
+import os
 
 unique_months = []
 grand_total = 0
@@ -62,7 +64,7 @@ for i in range(len(diffs)):
                      grt_dec = float(diffs[i][j])
                      grt_dec_month = (diffs[i][0])
 
-print ("Fucckkkkk!!!")
+
 print ("Financial Analysis")
 print ("------------------")
 print ("Total Months: " + str(len(unique_months)))

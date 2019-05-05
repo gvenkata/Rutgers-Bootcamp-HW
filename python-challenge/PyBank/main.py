@@ -43,7 +43,8 @@ for i in range(len (budget_list)):
             diffs[i-1].append(vDate)
         elif i != 0 and j == 1:
             bottom_month = float(budget_list[i][j])
-            diff = top_month - bottom_month
+            #diff = top_month - bottom_month
+            diff = bottom_month - top_month
             top_month = bottom_month
             #print ("i2 is " + str(i))
             #print ("j2 is " + str(j))
@@ -69,7 +70,7 @@ print ("Financial Analysis")
 print ("------------------")
 print ("Total Months: " + str(len(unique_months)))
 print ("Total: $" + str(grand_total))
-print ("Average Change: $" + str(round(total_diffs/len(unique_months),2)))
+print ("Average Change: $" + str(round(total_diffs/(len(unique_months)-1),2)))
 print ("Greatest Increase: " + grt_inc_month + " (" + str(grt_inc) + ")")
 print ("Greatest Decrease: " + grt_dec_month + " (" + str(grt_dec) + ")")
 
@@ -78,7 +79,7 @@ with open("output.txt", "a") as o:
     print ("------------------", file=o)
     print ("Total Months: " + str(len(unique_months)),file=o)
     print ("Total: $" + str(grand_total),file=o)
-    print ("Average Change: $" + str(round(total_diffs/len(unique_months),2)),file=o)
+    print ("Average Change: $" + str(round(total_diffs/(len(unique_months)-1),2)),file=o)
     print ("Greatest Increase: " + grt_inc_month + " (" + str(grt_inc) + ")",file=o)
     print ("Greatest Decrease: " + grt_dec_month + " (" + str(grt_dec) + ")",file=o)
 f.close

@@ -1,5 +1,7 @@
 #PyParagraph
 import re
+import os
+import sys
 #Word Count - split sentence on space
 #Sentence Count - Split paragraph on period
 #Letter Count (Avg/Word)
@@ -12,8 +14,45 @@ avg_letters = 0
 sent_words = 0
 split_sent = []
 avg_sent_words = 0
+counter = 1
 
-myfile = open("raw_data/paragraph_2.txt", "rt") 
+#break
+
+path = "raw_data"
+
+files = []
+# r=root, d=directories, f = files
+for r, d, f in os.walk(path):
+    for file in f:
+        if ".txt" in file:
+            files.append(file)
+
+print("Please choose the file you would like to analyze:")
+
+for f in files:
+   
+    print("Type " + str(counter) +  " for: " + f)
+    counter = counter + 1
+
+#break
+
+paragraph = input("Choose your option: ")
+
+if paragraph.isdigit():
+    if int(paragraph) < 1 or int(paragraph) > len(files): 
+        print("Not a valid input!!!")
+        sys.exit()
+    else: 
+        print("You chose: " + files[int(paragraph)-1])
+else:
+    print("Not a valid input!!!")
+    sys.exit()
+
+
+
+txtfile = os.path.join('raw_data', files[int(paragraph)-1])
+
+myfile = open(txtfile , "rt") 
 contents = myfile.read()
 myfile.close()  
 #print(contents) 

@@ -1,0 +1,10 @@
+Order in which to run: 
+
+1) CreateTables.sql: run first to create schema
+2) LoadTables.sql: copy paste into PSQL (no relatives path need to change path if run in diff environment/file path)
+3) DataAnalysis.sql: SQL exercises here. Made an assumption (commented) as far as employee end dates and what infinity dates reflect 
+4) SQLForBonus.sql: worksheet for BONUS SQL
+5) Geetha V HW 9 Bonus.ipynb: Python to run DB query and create bar chart
+
+
+

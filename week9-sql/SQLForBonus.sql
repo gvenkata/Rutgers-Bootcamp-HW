@@ -1,4 +1,4 @@
-SELECT TI.title, round(avg(SA.salary), 2)
+SELECT TI.title, round(avg(SA.salary), 2) as MONEY
 FROM 
 employees as EE, 
 titles as TI, 
@@ -8,4 +8,4 @@ EE.emp_no = TI.emp_no
 AND
 SA.emp_no = EE.emp_no
 group by TI.title
-order by round(avg(SA.salary), 2) DESC
+order by MONEY DESC

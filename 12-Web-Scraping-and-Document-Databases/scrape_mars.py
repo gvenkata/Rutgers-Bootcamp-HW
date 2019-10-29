@@ -13,8 +13,9 @@ from selenium.webdriver.chrome.options import Options
 import pymongo
 
 def scrape():
-    #mars_news()
+    mars_news()
     mars_feature_img()
+    mars_weather()
     
 
 
@@ -45,14 +46,12 @@ def mars_news():
     db = client.mars_scrape
     db.marsnews.insert(article)
     print("Article Data Uploaded!")
-
+    driver.close()
 
 def mars_feature_img():
 
-    #options = Options()
-    #options.add_argument('test-type')
-    #browser = Browser('chrome', options=options)
-    browser = Browser('chrome', executable_path='./chromedriver.exe', headless=True)
+    executable_path = {'executable_path':'./chromedriver.exe'}
+    browser = Browser('chrome', **executable_path)
     browser.visit('https://www.jpl.nasa.gov/spaceimages/?search=&category=Mars')
     button = browser.find_by_xpath("//a[@class='button fancybox']")
     featured_image_url = "https://www.jpl.nasa.gov" + button["data-fancybox-href"]
@@ -63,3 +62,45 @@ def mars_feature_img():
     db = client.mars_scrape
     db.marsimg.insert(mars_img)
     print("Feature Image Data Uploaded!")
+    browser.quit()
+
+def mars_weather():
+    url = 'https://twitter.com/marswxreport?lang=en'
+    response = requests.get(url)
+    soup = BeautifulSoup(response.text, 'lxml')
+    results = soup.find_all('div', class_='content')
+    for result in results:
+        author = result.find('strong', class_='fullname show-popup-with-id u-textTruncate')
+        if author.text == "Mars Weather":
+            weather = result.find('p', class_='TweetTextSize TweetTextSize--normal js-tweet-text tweet-text')
+            break
+    mars_weather = weather.text
+    weather = {}
+    weather["report"] = mars_weather
+    conn = "mongodb://localhost:27017"
+    client = pymongo.MongoClient(conn)
+    db = client.mars_scrape
+    db.marsweather.insert(weather)
+    print("Weather Data Uploaded!")
+
+    def mars_facts():
+        executable_path = {'executable_path':'./chromedriver.exe'}
+        browser = Browser('chrome', **executable_path)
+        browser.visit('https://space-facts.com/mars/')
+        url='https://space-facts.com/mars/'
+        tables = pd.read_html(url)
+        mars_earth_frame = tables[0]
+        mars_earth_frame
+
+        mars_table = mars_earth_frame[['Mars - Earth Comparison', 'Mars']]
+        mars_table = mars_table.rename(columns={"Mars - Earth Comparison": "Mars Metric", "Mars": "Value"})
+        mar_table_html = mars_table.to_html()
+
+        table = {}
+        table["html"] = mars_table_html
+        conn = "mongodb://localhost:27017"
+        client = pymongo.MongoClient(conn)
+        db = client.mars_scrape
+        db.marstable.insert(table)
+        print("Table HTML Uploaded!")
+    

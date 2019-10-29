@@ -30,6 +30,8 @@
     background: rgb(0, 33, 68); 
   }
 
+ 
+
   .img-lg {
     width:500px;
     height:500px;
@@ -38,6 +40,12 @@
   .img-med {
     width:400px;
     height:400px;
+  }
+
+  .img-scale-with-grid { 
+    outline: 0; 
+    max-width: 100%; 
+    height: auto; 
   }
 
   .img-sm {

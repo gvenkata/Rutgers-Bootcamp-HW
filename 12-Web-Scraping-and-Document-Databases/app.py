@@ -13,21 +13,19 @@ client = pymongo.MongoClient(conn)
 # connect to mongo db and collection
 db = client.mars_scrape
 
-# Or set inline
-# mongo = PyMongo(app, uri="mongodb://localhost:27017/craigslist_app")
 
-
-@app.route("/")
+@app.route("/scrape")
 def index():
     scrape_mars.scrape()
     return render_template("scraping.html")
 
-@app.route("/scrape")
+@app.route("/")
 def scraper():
     article = list(db.marsnews.find())
     feature_img = list(db.marsimg.find())
+    weather = list(db.marsweather.find())
     print(article)
-    return render_template("index.html", article=article, feature_img=feature_img)
+    return render_template("index.html", article=article, feature_img=feature_img , weather=weather)
 
 
 
